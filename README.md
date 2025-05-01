@@ -22,6 +22,7 @@ The chemical diffusion coefficient at each step is calculated using the followin
 - **τ**: Duration of the pulse
 
 The above formula is derived using Fick's First Law of diffusion. A detailed derivation is available in the [Derivation-LaTeX](Derivation-LaTeX) folder.
+
 GITT experiments are performed by applying a series of controlled current pulses, each followed by a relaxation period during which the cell voltage stabilizes. Key experimental points include:
 
 - **Pulse Control:** Ensuring that each pulse of duration **τ** is short enough to maintain a near-linear voltage response, yet long enough to perturb the system measurably.
