@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{bm} % bold math
+\usepackage{enumitem}
+\usepackage{svg}
+\usepackage[a4paper, margin=0.5in]{geometry}
+% Include hyperref as the last package (except for a few exceptions)
+\usepackage[colorlinks=true,
+linkcolor=blue,
+citecolor=blue,
+urlcolor=blue,
+pdfpagemode=FullScreen,
+filecolor=blue,]{hyperref}
+
+
+\begin{document}
+\begin{titlepage}
+\vspace*{0.5cm}
+\begin{center}
+\includesvg{LOGO}
+\vspace*{2cm}
+    \section*{Derivation Using the Explicit Solution of Fick's Second Law}
+    \vfill
+    November 2023
+\end{center}
+\end{titlepage}
+\newpage
+
+\textbf{1. Fick's Second Law:}
+
+Starting with Fick's Second Law \cite{Fick1855}:
+
+\begin{equation}\label{eq:con:1}
+\frac{\partial C(x,t)}{\partial t} = D\,\frac{\partial^2 C(x,t)}{\partial x^2}\,
+\end{equation}
+
+The boundary conditions are as follows:
+\begin{itemize}[leftmargin=2.5em]
+    \item \textbf{Initial condition:} \( C(x,0) = C_0 \) for \( x \ge 0 \).
+    \item \textbf{Far-field condition:} \( C(x \to \infty, t) = C_0 \).
+    \item \textbf{Boundary condition at \( x=0 \):} A constant flux is imposed:
+    
+    \begin{equation}\label{eq:con:2}
+    -D\,\left.\frac{\partial C}{\partial x}\right|_{x=0} = \frac{I}{F\,A}\,
+    \end{equation}
+    
+    where \(I\) is the applied current, \(F\) is Faraday's constant, and \(A\) is the electrode area.
+\end{itemize}
+
+\vspace{1ex}
+\textbf{2. Introduce the Similarity Variable:}
+
+Let
+
+\begin{equation}\label{eq:con:3}
+\eta = \frac{x}{2\sqrt{Dt}}\,
+\end{equation}
+
+This substitution transforms the diffusion equation into an ordinary differential equation in terms of \(\eta\).
+
+\vspace{1ex}
+\textbf{3. Solve the ODE:}
+
+The solution that satisfies the above conditions is
+
+\begin{equation}\label{eq:con:4}
+C(x,t) = C_0 - \frac{I}{F\,A\,D}\Biggl[\,x\,\operatorname{erfc}\Bigl(\frac{x}{2\sqrt{Dt}}\Bigr) - \frac{2\sqrt{Dt}}{\sqrt{\pi}}\,\exp\Bigl(-\frac{x^2}{4Dt}\Bigr)\Biggr]\,
+\end{equation}
+
+\vspace{1ex}
+\textbf{4. Evaluation at the Electrode Surface (\( x=0 \)):}
+
+Since \(\operatorname{erfc}(0)=1\) and the term \(x\,\operatorname{erfc}(\cdot)\) vanishes when \( x=0 \), we have
+
+\begin{equation}\label{eq:con:5}
+C(0,t) = C_0 - \frac{2I}{F\,A\,D}\,\sqrt{\frac{Dt}{\pi}}\,
+\end{equation}
+
+The magnitude of the change is:
+
+\begin{equation}\label{eq:con:6}
+\Delta C = \Bigl|C(0,t)-C_0\Bigr| = \frac{2I}{F\,A}\,\sqrt{\frac{t}{\pi\,D}}\,
+\end{equation}
+
+For a pulse of duration \(\tau\) (i.e. \(t=\tau\)):
+
+\begin{equation}\label{eq:con:7}
+\Delta C = \frac{2I}{F\,A}\,\sqrt{\frac{\tau}{\pi\,D}}\,
+\end{equation}
+
+\vspace{1ex}
+\textbf{5. Link with the Voltage Response:}
+
+Assume a linear relationship between the electrode potential and the concentration change,
+
+\begin{equation}\label{eq:con:8}
+\Delta E_\tau = \Bigl(\frac{dE}{dC}\Bigr)\Delta C\,
+\end{equation}
+
+Thus,
+
+\begin{equation}\label{eq:con:9}
+\Delta E_\tau = \Bigl(\frac{dE}{dC}\Bigr)\frac{2I}{F\,A}\,\sqrt{\frac{\tau}{\pi\,D}}\,
+\end{equation}
+
+Rearrange to solve for \(D\). Isolating the square-root gives:
+
+\begin{equation}\label{eq:con:10}
+\sqrt{\frac{1}{D}} = \frac{\Delta E_\tau}{\frac{dE}{dC}}\,\frac{F\,A}{2I}\,\sqrt{\frac{\pi}{\tau}}\,
+\end{equation}
+
+Squaring both sides yields
+
+\begin{equation}\label{eq:con:11}
+\frac{1}{D} = \frac{(\Delta E_\tau)^2}{\Bigl(\frac{dE}{dC}\Bigr)^2}\Bigl(\frac{F\,A}{2I}\Bigr)^2\,\frac{\pi}{\tau}\,
+\end{equation}
+
+or equivalently,
+
+\begin{equation}\label{eq:con:12}
+D = \frac{4I^2\,\tau}{\pi\,F^2\,A^2\,(\Delta E_\tau)^2}\Bigl(\frac{dE}{dC}\Bigr)^2\,
+\end{equation}
+
+\vspace{1ex}
+\textbf{6. Express \(\frac{dE}{dC}\) Using Equilibrium Measurements:}
+
+In a GITT experiment, after a current pulse the electrode relaxes to a new equilibrium potential. The overall (steady-state) voltage change \(\Delta E_s\) is associated with the overall concentration change \(\Delta C_\text{tot}\) in the active material. Using Faraday’s law, we have
+
+\begin{equation}\label{eq:con:13}
+\Delta C_\text{tot} = \frac{I\,\tau}{F}\,\frac{M}{m\,V_M}\,
+\end{equation}
+
+and, assuming
+
+\begin{equation}\label{eq:con:14}
+\Delta E_s = \Bigl(\frac{dE}{dC}\Bigr)\Delta C_\text{tot}\,
+\end{equation}
+
+we obtain
+
+\begin{equation}\label{eq:con:15}
+\frac{dE}{dC} = \Delta E_s\,\frac{F\,m\,V_M}{I\,\tau\,M}\,
+\end{equation}
+
+\vspace{1ex}
+\textbf{7. Final Expression for \(D\):}
+
+Substitute the expression for \(\frac{dE}{dC}\) into the equation for \(D\):
+
+\begin{equation}\label{eq:con:16}
+D = \frac{4I^2\,\tau}{\pi\,F^2\,A^2\,(\Delta E_\tau)^2} \left[\Delta E_s\,\frac{F\,m\,V_M}{I\,\tau\,M}\right]^2\,
+\end{equation}
+
+Simplify step-by-step:
+\begin{enumerate}[label=(\roman*)]
+    \item Square the bracket:
+    \begin{equation}\label{eq:con:17}
+    \left[\Delta E_s\,\frac{F\,m\,V_M}{I\,\tau\,M}\right]^2 = (\Delta E_s)^2\,\frac{F^2\,m^2\,V_M^2}{I^2\,\tau^2\,M^2}\,
+    \end{equation}
+    \item Multiply by the prefactor:
+    \begin{equation}\label{eq:con:18}
+    D = \frac{4I^2\,\tau}{\pi\,F^2\,A^2\,(\Delta E_\tau)^2} \cdot \frac{(\Delta E_s)^2\,F^2\,m^2\,V_M^2}{I^2\,\tau^2\,M^2}\,
+    \end{equation}
+    \item Cancel the common factors:
+    \begin{equation}\label{eq:con:19}
+    D = \frac{4\,m^2\,V_M^2\,(\Delta E_s)^2}{\pi\,A^2\,M^2\,\tau\,(\Delta E_\tau)^2}\,
+    \end{equation}
+\end{enumerate}
+Thus, the final GITT expression for the diffusion coefficient is:
+
+\begin{equation}\label{eq:con:20}
+\bm{D = \frac{4}{\pi\,\tau}\left(\frac{m\,V_M}{M\,A}\right)^2\left(\frac{\Delta E_s}{\Delta E_\tau}\right)^2}\,
+\end{equation}
+\newpage
+\bibliographystyle{ieeetr}
+\bibliography{references}
+
+\end{document}
